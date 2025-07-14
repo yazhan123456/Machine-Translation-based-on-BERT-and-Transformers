@@ -61,3 +61,17 @@ python translate.py --text "Машинное обучение это здоро�
 - LR warm-up 4000 steps
 - Label smoothing 0.1
 - BLEU eval every epoch
+
+## 5. More
+I'm a beginner in NLP and deep learning.This is my first 
+step to combine NLP with deep learning. It's a tough process.
+Because of lack of High performance GPU and data quantity. 
+my projet's performance is awful. Although the loss dropped 
+nicely, there was no premature overfitting, but my model only 
+got 0.0006 in the BLEU score. I compute and train my model both
+in my MacBook Pro(M1 Pro Chip) and one NVIDA's A10, but there was 
+no improvement. I published this model not only for recording my 
+first project, but also invite other skilled data scientists to 
+help me change the situation. Although my model is basic, only based 
+on Transformers and BERT, but I believe that it can perform well in
+the future's Russian-English translation. Thank you for reading!
