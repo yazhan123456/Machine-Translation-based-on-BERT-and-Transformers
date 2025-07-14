@@ -4,10 +4,10 @@ from torch.utils.data import Dataset
 class TranslationDataset(Dataset):
     def __init__(self, src_file, tgt_file, tokenizer_src, tokenizer_tgt, max_len=128):
         """
-        初始化数据集
-        :param src_file: 源语言文件路径（如：train.src）
-        :param tgt_file: 目标语言文件路径（如：train.tgt）
-        :param tokenizer_src: 源语言的 tokenizer（如 BERT tokenizer）
+        初始化数据集  initialize dataset
+        :param src_file: 源语言文件路径 Source language file path（如：train.src）
+        :param tgt_file: 目标语言文件路径 target language file path （如：train.tgt）
+        :param tokenizer_src: 源语言的 tokenizer  sourth's language tokenizer（如 BERT tokenizer）
         :param tokenizer_tgt: 目标语言的 tokenizer（如 BERT tokenizer）
         :param max_len: 最大序列长度
         """
@@ -55,9 +55,9 @@ class TranslationDataset(Dataset):
 
 def collate_fn(batch):
     """
-    用于 DataLoader 自动拼接 batch
-    :param batch: 一个 batch 的数据列表（每项是 4 个 tensor）
-    :return: batch 形式的 4 个张量
+    用于 DataLoader 自动拼接 batch   Used for DataLoader to automatically splice batches
+    :param batch: 一个 batch 的数据列表（每项是 4 个 tensor） A batch data list (each item is 4 tensors)
+    :return: batch 形式的 4 个张量  4 tensors in batch form
     """
     src_input_ids, src_attention_mask, tgt_input_ids, tgt_attention_mask = zip(*batch)
 
