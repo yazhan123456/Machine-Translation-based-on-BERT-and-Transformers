@@ -1,16 +1,16 @@
 import torch
 from torch.utils.data import DataLoader
-import argparse
+import argparse 
 from tqdm import tqdm
 import os
 
-from model import MyModel  # 自定义模型
-from dataset import TranslationDataset  # 自定义数据集加载器
+from model import MyModel  # 自定义模型 custom model
+from dataset import TranslationDataset  # 自定义数据集加载器 Custom dataset loader
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def main(args):
-    # 加载数据集
+    # 加载数据集 Load the dataset
     train_dataset = TranslationDataset(args.train_src, args.train_tgt, args.tokenizer_src, args.tokenizer_tgt)
     val_dataset = TranslationDataset(args.val_src, args.val_tgt, args.tokenizer_src, args.tokenizer_tgt)
 
@@ -19,14 +19,14 @@ def main(args):
     val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False,
                             num_workers=2, pin_memory=True)
 
-    # 初始化模型和优化器
+    # 初始化模型和优化器  Intialize the model and optimizeer
     model = MyModel().to(DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
     start_epoch = 0
     best_val_loss = float('inf')
 
-    # 支持 resume
+    # 支持 resume   support the resume
     if args.resume:
         checkpoint = torch.load(args.resume, map_location=DEVICE)
         model.load_state_dict(checkpoint['model_state_dict'])
@@ -34,7 +34,7 @@ def main(args):
         start_epoch = checkpoint['epoch'] + 1
         print(f"🔁 Resumed training from epoch {start_epoch}")
 
-    # 开始训练
+    # 开始训练   start training
     for epoch in range(start_epoch, args.epochs):
         model.train()
         epoch_loss = 0
@@ -50,14 +50,14 @@ def main(args):
         avg_loss = epoch_loss / len(train_loader)
         print(f"✅ Epoch {epoch+1}: train_loss={avg_loss:.4f}")
 
-        # 保存模型
+        # 保存模型 save the model
         torch.save({
             'epoch': epoch,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict()
         }, args.ckpt_path)
 
-        # early stopping 可选实现
+        # early stopping 可选实现   optional implementation
         if args.early_stopping and avg_loss < best_val_loss:
             best_val_loss = avg_loss
         elif args.early_stopping and (epoch - start_epoch) >= args.early_stopping:
