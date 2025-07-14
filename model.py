@@ -14,14 +14,14 @@ class MyModel(nn.Module):
                  dropout=0.1):
         super(MyModel, self).__init__()
 
-        # 1. 加载 BERT 编码器
+        # 1. 加载 BERT 编码器 Loading the BERT encoder
         self.bert = BertModel.from_pretrained(bert_model_name)
         self.d_model = d_model
 
-        # 2. 构建目标语言的嵌入层
+        # 2. 构建目标语言的嵌入层 Building an embedding layer in the target language
         self.embedding = nn.Embedding(vocab_size, d_model)
 
-        # 3. 构建 Transformer 解码器
+        # 3. 构建 Transformer 解码器 Building a Transformer decoder 
         decoder_layer = nn.TransformerDecoderLayer(
             d_model=d_model,
             nhead=nhead,
@@ -31,7 +31,7 @@ class MyModel(nn.Module):
         )
         self.decoder = nn.TransformerDecoder(decoder_layer, num_layers=num_layers)
 
-        # 4. 输出层：将解码器输出映射到词汇表大小
+        # 4. 输出层：将解码器输出映射到词汇表大小  Output layer: maps the decoder output to the vocabulary size
         self.fc_out = nn.Linear(d_model, vocab_size)
 
     def forward(self, src_input_ids, tgt_input_ids):
