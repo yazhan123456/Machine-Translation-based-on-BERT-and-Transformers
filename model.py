@@ -52,5 +52,6 @@ class MyModel(nn.Module):
     def generate_subsequent_mask(self, size):
         """
         生成自回归的上三角 mask，防止 decoder 看见未来信息
+        Generate an autoregressive upper triangular mask to prevent the decoder from seeing future information
         """
         return torch.triu(torch.ones(size, size) * float('-inf'), diagonal=1)
