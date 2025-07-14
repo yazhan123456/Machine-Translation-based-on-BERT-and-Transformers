@@ -8,7 +8,7 @@ from sacrebleu import corpus_bleu
 import os
 import sys
 
-# 添加 src 路径
+# 添加 src 路径   add the src path
 sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 
 from dataset import TranslationDataset, collate_fn
@@ -64,7 +64,7 @@ def evaluate(args):
             all_preds.extend(preds)
             all_targets.extend(targets)
 
-    # 输出文件
+    # 输出文件  output file
     if args.output_preds:
         with open(args.output_preds, 'w', encoding='utf-8') as f:
             for line in all_preds:
