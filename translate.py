@@ -51,20 +51,20 @@ def main():
     parser.add_argument("--max_len", type=int, default=100)
     args = parser.parse_args()
 
-    # ✅ 优先使用 CUDA
+    # ✅ 优先使用 CUDA (priority use CUDA)
     device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
-    print(f"✅ 使用推理设备: {device}")
+    print(f"✅ 使用推理设备 use inference devices: {device}")
     if device.type == "cuda":
-        print(f"🖥️ 使用 GPU: {torch.cuda.get_device_name(0)}")
+        print(f"🖥️ 使用 GPU use GPU: {torch.cuda.get_device_name(0)}")
 
     tokenizer_src = BertTokenizer.from_pretrained(args.tokenizer_src)
     tokenizer_tgt = BertTokenizer.from_pretrained(args.tokenizer_tgt)
 
     model = load_model(args.ckpt, tokenizer_src, tokenizer_tgt, device)
 
-    print("\n📥 输入原句:", args.sentence)
+    print("\n📥 输入原句 input original language:", args.sentence)
     translated = translate_sentence(args.sentence, model, tokenizer_src, tokenizer_tgt, device, args.max_len, args.mode)
-    print("📤 翻译结果:", translated)
+    print("📤 翻译结果 output:", translated)
 
 if __name__ == "__main__":
     main()
